@@ -32,6 +32,7 @@ export default function DetailCustomer() {
             navigation.navigate("Main", {screen: "Customer"})
         }else{
             setSnackbarMsg(titleCase(response.errors));
+            setLoading(false);
         }
 
         function titleCase(word) {

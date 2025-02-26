@@ -7,6 +7,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useAuth } from "../contexts/AuthContext";
 // screen
 import LoginScreen from "../screens/Login";
+import RegisterScreen from "../screens/Register";
 import HomeScreen from "../screens/HomeScreen";
 // order
 import OrderScreen from "../screens/order";
@@ -78,7 +79,10 @@ export default function AppNavigator() {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!user ? (
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+          </>
         ) : (
           <>
             <Stack.Screen name="Main" component={BottomTabNavigator} />

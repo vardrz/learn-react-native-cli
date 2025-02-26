@@ -32,6 +32,7 @@ export default function DetailProduct() {
             navigation.navigate("Main", {screen: "Produk"})
         }else{
             setSnackbarMsg(titleCase(response.errors));
+            setLoading(false);
         }
 
         function titleCase(word) {

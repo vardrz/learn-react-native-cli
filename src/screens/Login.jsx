@@ -61,10 +61,12 @@ export default function LoginScreen() {
         >Masuk</Button>
 
         <Button
+          icon="arrow-right-circle"
           mode="contained"
           buttonColor="black"
-          onPress={() => []}
+          onPress={() => navigation.navigate('Register')}
           style={{borderRadius: 10, marginTop: 5, paddingVertical: 8}}
+          contentStyle={{flexDirection: 'row-reverse'}}
           labelStyle={{fontSize: 18, fontWeight: "600"}}
         >Daftar</Button>
       </View>
