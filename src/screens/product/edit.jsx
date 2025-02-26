@@ -1,37 +1,27 @@
 import { Text, StyleSheet, TextInput, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { updateCustomer } from '../../services/customer'
+import { updateProduct } from '../../services/product'
 import { useAuth } from '../../contexts/AuthContext'
 import { Button, PaperProvider } from 'react-native-paper'
 
-export default function EditCustomer() {
+export default function EditProduct() {
     const { token } = useAuth();
     const navigation = useNavigation();
-    const customer = useRoute().params;
+    const product = useRoute().params;
     
     const [data, setData] = useState({
-        name: customer.name,
-        address: customer.address,
-        phone: customer.phone,
+        nama: product.nama,
+        deskripsi: product.deskripsi,
     })
 
     function validation() {
-        if(
-            data.name == customer.name &&
-            data.address == customer.address &&
-            data.phone == customer.phone
-        ){
+        if(data.nama == product.nama && data.deskripsi == product.deskripsi){
             alert("Tidak ada yang diubah!");
             return
         }
 
-        if(data.name && data.address && data.phone){
-            if(data.phone.length < 11){
-                alert('Nomor telepon minimal 11 karakter!');
-                return
-            }
-
+        if(data.nama && data.deskripsi){
             handleSave();
         }else{
             alert("Isi data yang dibutuhkan")
@@ -39,11 +29,11 @@ export default function EditCustomer() {
     }
 
     const handleSave = async () => {
-        const response = await updateCustomer(token, customer.ID, data);
+        const response = await updateProduct(token, product.ID, data);
 
         if(response.status){
-            alert("Berhasil update data customer");
-            navigation.navigate("Main", { screen: "Customer" })
+            alert("Berhasil memperbarui produk");
+            navigation.navigate("Main", { screen: "Produk" })
         }else{
             alert(response.message);
         }
@@ -67,29 +57,21 @@ export default function EditCustomer() {
                         fontSize: 25,
                         fontWeight: "600",
                     }}
-                >Edit Customer</Text>
+                >Edit Produk</Text>
                 
                 <TextInput
-                    placeholder='Name'
+                    placeholder='Nama Produk'
                     placeholderTextColor="gray"
                     style={styles.input}
-                    defaultValue={customer.name}
-                    onChangeText={(value) => setData({...data, name: value})}
+                    defaultValue={product.nama}
+                    onChangeText={(value) => setData({...data, nama: value})}
                 />
                 <TextInput
-                    placeholder='Address'
+                    placeholder='Deskripsi Produk'
                     placeholderTextColor="gray"
                     style={styles.input}
-                    defaultValue={customer.address}
-                    onChangeText={(value) => setData({...data, address: value})}
-                />
-                <TextInput
-                    placeholder='Phone'
-                    placeholderTextColor="gray"
-                    keyboardType="numeric"
-                    style={styles.input}
-                    defaultValue={customer.phone}
-                    onChangeText={(value) => setData({...data, phone: value})}
+                    defaultValue={product.deskripsi}
+                    onChangeText={(value) => setData({...data, deskripsi: value})}
                 />
                 
                 <Button

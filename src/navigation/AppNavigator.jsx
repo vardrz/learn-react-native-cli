@@ -4,20 +4,24 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, useNavigationContainerRef } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useAuth } from "../contexts/AuthContext";
-
+// screen
 import LoginScreen from "../screens/Login";
 import HomeScreen from "../screens/HomeScreen";
-import ProductScreen from "../screens/product";
-
+// order
 import OrderScreen from "../screens/order";
 import AddOrder from "../screens/order/add";
 import DetailOrder from "../screens/order/detail";
 import EditOrder from "../screens/order/edit";
-
+// customer
 import CustomerScreen from "../screens/customer";
 import DetailCustomer from "../screens/customer/detail";
 import AddCustomer from "../screens/customer/add";
 import EditCustomer from "../screens/customer/edit";
+// product
+import ProductScreen from "../screens/product";
+import AddProduct from "../screens/product/add";
+import DetailProduct from "../screens/product/detail";
+import EditProduct from "../screens/product/edit";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -69,6 +73,10 @@ export default function AppNavigator() {
             <Stack.Screen name="AddCustomer" component={AddCustomer} />
             <Stack.Screen name="DetailCustomer" component={DetailCustomer} />
             <Stack.Screen name="EditCustomer" component={EditCustomer} />
+
+            <Stack.Screen name="AddProduct" component={AddProduct} />
+            <Stack.Screen name="DetailProduct" component={DetailProduct} />
+            <Stack.Screen name="EditProduct" component={EditProduct} />
           </>
         )}
       </Stack.Navigator>
