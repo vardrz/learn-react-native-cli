@@ -6,10 +6,12 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Button, Dialog, Portal, PaperProvider } from 'react-native-paper';
 
 export default function DetailCustomer() {
-    const { token } = useAuth();
+    const { token, setShowSnackbar, setSnackbarMsg } = useAuth();
     const navigation = useNavigation();
 
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const data = useRoute().params;
 
     const handleConfirmDelete = () => {
@@ -17,16 +19,19 @@ export default function DetailCustomer() {
     };
 
     const handleDelete = async () => {
+        setLoading(true);
+        
         console.log(`deleted id: ${data.ID}`);
         setVisible(false);
         
         const response = await deleteCustomer(token, data.ID);
         
+        setShowSnackbar(true);
         if(response.status){
-            alert("Customer dihapus");
+            setSnackbarMsg("Customer dihapus");
             navigation.navigate("Main", {screen: "Customer"})
         }else{
-            alert(titleCase(response.errors));
+            setSnackbarMsg(titleCase(response.errors));
         }
 
         function titleCase(word) {
@@ -36,84 +41,85 @@ export default function DetailCustomer() {
 
     return (
         <PaperProvider>
-        <ScrollView
-            style={{
-                backgroundColor: "white",
-                flex: 1,
-                paddingHorizontal: 30
-            }}
-        >
-            <Text
+            <ScrollView
                 style={{
-                    width: "100%",
-                    textAlign: "center",
-                    paddingTop: 50,
-                    marginBottom: 20,
-                    fontSize: 25,
-                    fontWeight: "600",
-                }}
-            >Detail Customer</Text>
-
-            <View
-                style={{
-                    alignItems: "baseline",
-                    width: "100%"
+                    backgroundColor: "white",
+                    flex: 1,
+                    paddingHorizontal: 30
                 }}
             >
-                <Text style={styles.text}>{"Name : " + data.name}</Text>
-                <Text style={styles.text}>{"Address : " + data.address}</Text>
-                <Text style={styles.text}>{"Phone : " + data.phone}</Text>
-            </View>
+                <Text
+                    style={{
+                        width: "100%",
+                        textAlign: "center",
+                        paddingTop: 50,
+                        marginBottom: 20,
+                        fontSize: 25,
+                        fontWeight: "600",
+                    }}
+                >Detail Customer</Text>
 
-            <Button
-                onPress={() => navigation.navigate('EditCustomer', data)}
-                style={{
-                    height: 45,
-                    backgroundColor: "blue",
-                    borderRadius: 10,
-                    marginTop: 10,
-                    justifyContent: "center"
-                }}
-                textColor='white'
-            >Edit</Button>
-            <Button
-                onPress={() => handleConfirmDelete()}
-                style={{
-                    height: 45,
-                    backgroundColor: "red",
-                    borderRadius: 10,
-                    marginTop: 10,
-                    justifyContent: "center"
-                }}
-                textColor='white'
-            >Hapus</Button>
-            <Button
-                onPress={() => navigation.goBack()}
-                style={{
-                    height: 45,
-                    backgroundColor: "gray",
-                    borderRadius: 10,
-                    marginTop: 10,
-                    marginBottom: 50,
-                    justifyContent: "center"
-                }}
-                textColor='white'
-            >Kembali</Button>
+                <View
+                    style={{
+                        alignItems: "baseline",
+                        width: "100%"
+                    }}
+                >
+                    <Text style={styles.text}>{"Name : " + data.name}</Text>
+                    <Text style={styles.text}>{"Address : " + data.address}</Text>
+                    <Text style={styles.text}>{"Phone : " + data.phone}</Text>
+                </View>
 
-            {/* confirm */}
-            <Portal>
-                <Dialog style={{borderRadius: 10}} visible={visible} onDismiss={() => setVisible(false)}>
-                    <Dialog.Title>Konfirmasi</Dialog.Title>
-                    <Dialog.Content>
-                        <Text style={{color: "white"}}>Hapus customer ini?</Text>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button textColor='gray' onPress={() => setVisible(false)}>Batal</Button>
-                        <Button textColor='red' onPress={() => handleDelete()}>Hapus</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
-        </ScrollView>
+                <Button
+                    onPress={() => navigation.navigate('EditCustomer', data)}
+                    style={{
+                        height: 45,
+                        backgroundColor: "blue",
+                        borderRadius: 10,
+                        marginTop: 10,
+                        justifyContent: "center"
+                    }}
+                    textColor='white'
+                >Edit</Button>
+                <Button
+                    onPress={() => handleConfirmDelete()}
+                    disabled={loading}
+                    style={{
+                        height: 45,
+                        backgroundColor: "red",
+                        borderRadius: 10,
+                        marginTop: 10,
+                        justifyContent: "center"
+                    }}
+                    textColor='white'
+                >{loading ? 'Menghapus...' : 'Hapus'}</Button>
+                <Button
+                    onPress={() => navigation.goBack()}
+                    style={{
+                        height: 45,
+                        backgroundColor: "gray",
+                        borderRadius: 10,
+                        marginTop: 10,
+                        marginBottom: 50,
+                        justifyContent: "center"
+                    }}
+                    textColor='white'
+                >Kembali</Button>
+
+                {/* confirm */}
+                <Portal>
+                    <Dialog style={{borderRadius: 10}} visible={visible} onDismiss={() => setVisible(false)}>
+                        <Dialog.Title>Konfirmasi</Dialog.Title>
+                        <Dialog.Content>
+                            <Text style={{color: "white"}}>Hapus customer ini?</Text>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button textColor='gray' onPress={() => setVisible(false)}>Batal</Button>
+                            <Button textColor='red' onPress={() => handleDelete()}>Hapus</Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+            </ScrollView>
         </PaperProvider>
     )
 }

@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import EncryptedStorage from "react-native-encrypted-storage";
 import api from "../constants/api";
+import { Snackbar } from "react-native-paper";
+import { Text } from "react-native";
 
 const AuthContext = createContext();
 
@@ -8,6 +10,10 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // for snackbar
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMsg, setSnackbarMsg] = useState(false);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -66,8 +72,23 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isLoading }}>
-        {children}
+    <AuthContext.Provider value={{ user, token, login, logout, isLoading, setShowSnackbar, setSnackbarMsg }}>
+      {children}
+      
+      {/* snackbar */}
+      <Snackbar
+        style={{
+          backgroundColor: "black",
+          borderRadius: 15
+        }}
+        visible={showSnackbar}
+        duration={3000}
+        onDismiss={() => setShowSnackbar(false)}
+        action={{
+          label: 'OK',
+          onPress: () => setShowSnackbar(false),
+        }}
+      ><Text style={{color: "white"}}>{snackbarMsg}</Text></Snackbar>
     </AuthContext.Provider>
   );
 };

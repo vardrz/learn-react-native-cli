@@ -1,4 +1,5 @@
 import React from "react";
+import { StyleSheet, View, ActivityIndicator, Text } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, useNavigationContainerRef } from "@react-navigation/native";
@@ -55,7 +56,23 @@ function BottomTabNavigator() {
 
 export default function AppNavigator() {
   const navigationRef = useNavigationContainerRef();
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: "700",
+            marginBottom: 20,
+            color: "blue"
+          }}
+        >Open App</Text>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -83,3 +100,12 @@ export default function AppNavigator() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+});
