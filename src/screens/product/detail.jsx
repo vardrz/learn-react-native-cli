@@ -27,7 +27,11 @@ export default function DetailProduct() {
             alert("Produk dihapus");
             navigation.navigate("Main", {screen: "Produk"})
         }else{
-            alert(response.message);
+            alert(titleCase(response.errors));
+        }
+
+        function titleCase(word) {
+            return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
         }
     }
 

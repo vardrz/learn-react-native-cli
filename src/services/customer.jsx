@@ -44,11 +44,19 @@ export const updateCustomer = async (token, id, data) => {
 };
 
 export const deleteCustomer = async (token, id) => {
-    const response = await axios.delete(`${API_BASE_URL}/api/customer/${id}`, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        },
-    });
-    
-    return response.data;
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/api/customer/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            return error.response.data; 
+        } else {
+            return { status: false, message: "Request failed", errors: error.message };
+        }
+    }
 };

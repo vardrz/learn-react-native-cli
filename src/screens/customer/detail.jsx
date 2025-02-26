@@ -11,7 +11,6 @@ export default function DetailCustomer() {
 
     const [visible, setVisible] = useState(false);
     const data = useRoute().params;
-    console.log(data);
 
     const handleConfirmDelete = () => {
         setVisible(true);
@@ -27,7 +26,11 @@ export default function DetailCustomer() {
             alert("Customer dihapus");
             navigation.navigate("Main", {screen: "Customer"})
         }else{
-            alert(response.message);
+            alert(titleCase(response.errors));
+        }
+
+        function titleCase(word) {
+            return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
         }
     }
 
