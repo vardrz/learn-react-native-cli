@@ -295,7 +295,7 @@ export default function EditOrder() {
             {/* confirm modal */}
             <View>
                 <Portal>
-                    <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+                    <Dialog style={{borderRadius: 10}} visible={visible} onDismiss={() => setVisible(false)}>
                         <Dialog.Title>Konfirmasi</Dialog.Title>
                         <Dialog.Content>
                             <Text style={{color: "white"}}>Perbarui data order ini?</Text>

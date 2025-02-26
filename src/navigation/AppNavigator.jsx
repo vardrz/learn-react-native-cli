@@ -7,11 +7,17 @@ import { useAuth } from "../contexts/AuthContext";
 
 import LoginScreen from "../screens/Login";
 import HomeScreen from "../screens/HomeScreen";
+import ProductScreen from "../screens/product";
 
-import OrderScreen from "../screens/OrderScreen";
+import OrderScreen from "../screens/order";
 import AddOrder from "../screens/order/add";
 import DetailOrder from "../screens/order/detail";
 import EditOrder from "../screens/order/edit";
+
+import CustomerScreen from "../screens/customer";
+import DetailCustomer from "../screens/customer/detail";
+import AddCustomer from "../screens/customer/add";
+import EditCustomer from "../screens/customer/edit";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,6 +30,8 @@ function BottomTabNavigator() {
           let iconName;
           if (route.name === "Home") iconName = "home-outline";
           else if(route.name === "Order") iconName = "cart-outline";
+          else if(route.name === "Customer") iconName = "people-outline";
+          else if(route.name === "Produk") iconName = "cube-outline";
 
           return <Icon name={iconName} size={size} color={color} />;
         },
@@ -35,6 +43,8 @@ function BottomTabNavigator() {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Order" component={OrderScreen} />
+      <Tab.Screen name="Customer" component={CustomerScreen} />
+      <Tab.Screen name="Produk" component={ProductScreen} />
     </Tab.Navigator>
   );
 }
@@ -55,6 +65,10 @@ export default function AppNavigator() {
             <Stack.Screen name="AddOrder" component={AddOrder} />
             <Stack.Screen name="DetailOrder" component={DetailOrder} />
             <Stack.Screen name="EditOrder" component={EditOrder} />
+
+            <Stack.Screen name="AddCustomer" component={AddCustomer} />
+            <Stack.Screen name="DetailCustomer" component={DetailCustomer} />
+            <Stack.Screen name="EditCustomer" component={EditCustomer} />
           </>
         )}
       </Stack.Navigator>
