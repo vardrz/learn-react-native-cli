@@ -3,12 +3,15 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, useNavigationContainerRef } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useAuth } from "../contexts/AuthContext";
 
-import LandingScreen from "../screens/Landing";
 import LoginScreen from "../screens/Login";
 import HomeScreen from "../screens/HomeScreen";
+
 import OrderScreen from "../screens/OrderScreen";
-import { useAuth } from "../contexts/AuthContext";
+import AddOrder from "../screens/order/add";
+import DetailOrder from "../screens/order/detail";
+import EditOrder from "../screens/order/edit";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,12 +47,15 @@ export default function AppNavigator() {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!user ? (
-          <>
-            <Stack.Screen name="Landing" component={LandingScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-          </>
+          <Stack.Screen name="Login" component={LoginScreen} />
         ) : (
-          <Stack.Screen name="Main" component={BottomTabNavigator} />
+          <>
+            <Stack.Screen name="Main" component={BottomTabNavigator} />
+            
+            <Stack.Screen name="AddOrder" component={AddOrder} />
+            <Stack.Screen name="DetailOrder" component={DetailOrder} />
+            <Stack.Screen name="EditOrder" component={EditOrder} />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>

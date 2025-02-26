@@ -67,15 +67,6 @@ export default function LoginScreen() {
           style={{borderRadius: 10, marginTop: 5, paddingVertical: 8}}
           labelStyle={{fontSize: 18, fontWeight: "600"}}
         >Daftar</Button>
-
-        <Button
-          icon="arrow-left"
-          mode="contained"
-          buttonColor="black"
-          onPress={() => navigation.navigate('Landing')}
-          style={{borderRadius: 10, marginTop: 15, paddingVertical: 8}}
-          labelStyle={{fontSize: 18, fontWeight: "600"}}
-        >Kembali</Button>
       </View>
     </View>
   );

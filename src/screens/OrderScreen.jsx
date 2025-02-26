@@ -2,6 +2,7 @@ import { View, Text, ScrollView, RefreshControl, TextInput, TouchableOpacity } f
 import { Appbar, Searchbar } from 'react-native-paper'
 import { AllOrder, GetOrderByNumber } from '../services/order';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { useDebounce } from 'use-debounce';
 import { toRupiah } from 'to-rupiah';
@@ -9,6 +10,7 @@ import { toRupiah } from 'to-rupiah';
 export default function OrderScreen() {
   const { token } = useAuth();
   const [orders, setOrders] = useState(null);
+  const navigation = useNavigation();
     
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -64,7 +66,7 @@ export default function OrderScreen() {
       {/* header */}
       <Appbar.Header style={{backgroundColor: "darkblue"}}>
           <Appbar.Content title="Order" color='white' />
-          <Appbar.Action icon="plus" color='white' onPress={() => console.log("add order")} />
+          <Appbar.Action icon="plus" color='white' onPress={() => navigation.navigate('AddOrder')} />
       </Appbar.Header>
 
       <View
@@ -120,18 +122,18 @@ export default function OrderScreen() {
                     justifyContent: "space-between",
                     alignItems: "center"
                   }}
-                  // onPress={() => {
-                  //   let order = {
-                  //     id: data.ID,
-                  //     order_number: data.order_number,
-                  //     customer_id: data.customer_id,
-                  //     customer_name: data.customer.name,
-                  //     discount: data.discount,
-                  //     subtotal: data.subtotal,
-                  //     details: JSON.stringify(data.details)
-                  //   };
-                  //   router.push({pathname: '/pages/order/detail', params: order})
-                  // }}
+                  onPress={() => {
+                    let order = {
+                      id: data.ID,
+                      order_number: data.order_number,
+                      customer_id: data.customer_id,
+                      customer_name: data.customer.name,
+                      discount: data.discount,
+                      subtotal: data.subtotal,
+                      details: data.details
+                    };
+                    navigation.push('DetailOrder', order)
+                  }}
                 >
                   <View>
                     <Text style={{fontWeight: "500"}}>{data.order_number}</Text>
