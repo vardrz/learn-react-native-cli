@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply plugin: 'com.google.gms.google-services'
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
@@ -111,7 +112,7 @@ android {
         abi {
             enable true
             reset()
-            include 'armeabi-v7a', 'arm64-v8a'
+            include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
             universalApk false
         }
     }
@@ -120,6 +121,9 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    // fcm
+    implementation platform("com.google.firebase:firebase-bom:33.9.0")
+    implementation("com.google.firebase:firebase-messaging")
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         setUser(data.data);
         setToken(data.token);
         
-        navigation.navigate('Main')
+        navigation.navigate('Main', {screen: "Home"})
       } else {
         alert(data.message || "Login failed");
       }

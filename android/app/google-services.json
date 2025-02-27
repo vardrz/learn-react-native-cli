@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "980266067258",
+    "project_id": "rncli2025",
+    "storage_bucket": "rncli2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980266067258:android:1ecbbc681c1871d9db1c03",
+        "android_client_info": {
+          "package_name": "com.vard.rncli"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaQSExHlG7EuMFd9pzTMGwfPv3hZOzFko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
