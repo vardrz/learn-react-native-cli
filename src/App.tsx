@@ -2,10 +2,9 @@ import AppNavigator from "./navigation/AppNavigator";
 import { AuthProvider } from "./contexts/AuthContext";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect } from 'react';
-import { getMessaging, getToken, requestPermission, subscribeToTopic } from "@react-native-firebase/messaging";
+import { getMessaging, requestPermission, subscribeToTopic } from "@react-native-firebase/messaging";
 import { getApp } from "@react-native-firebase/app";
 import { PermissionsAndroid, Platform } from "react-native";
-import EncryptedStorage from "react-native-encrypted-storage";
 
 export default function Index() {
   useEffect(() => {
@@ -30,28 +29,9 @@ export default function Index() {
       }
     };
 
-    const saveNotificationToken = async () => {
-      try {
-        const messaging = getMessaging(getApp());
-        const token = await getToken(messaging);
-        console.log("Token : " + token);
-        
-        const storedNotifToken = await EncryptedStorage.getItem("notif_token");
-        if (!storedNotifToken) {
-          await EncryptedStorage.setItem("notif_token", token);
-          console.log("Notif Token Saved");
-        }else{
-          console.log("Already Notif Token");
-        }
-      } catch (error) {
-        console.error("Failed get fcm notif token");
-      }
-    };
-
     requestAndroidNotificationPermission();
     requestUserPermission();
     subsGlobalTopic();
-    saveNotificationToken();
   }, []);
 
   const requestAndroidNotificationPermission = async () => {
