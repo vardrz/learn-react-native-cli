@@ -1,4 +1,4 @@
-package com.reactnativecli
+package com.vard.rncli
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
