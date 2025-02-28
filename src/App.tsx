@@ -6,7 +6,7 @@ import { getMessaging, requestPermission, subscribeToTopic } from "@react-native
 import { getApp } from "@react-native-firebase/app";
 import { PermissionsAndroid, Platform } from "react-native";
 
-export default function Index() {
+export default function App() {
   useEffect(() => {
     const requestUserPermission = async () => {
       try {
