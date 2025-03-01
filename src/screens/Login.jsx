@@ -43,11 +43,17 @@ export default function LoginScreen() {
         <TextInput
           label='Email'
           style={styles.input}
+          textColor="black"
+          underlineColor="#ffffff00"
+          activeUnderlineColor={color.primary}
           onChangeText={setEmail}
         />
         <TextInput
           label='Password'
           style={styles.input}
+          textColor="black"
+          underlineColor="#ffffff00"
+          activeUnderlineColor={color.primary}
           onChangeText={setPassword}
           secureTextEntry
         />
@@ -55,6 +61,7 @@ export default function LoginScreen() {
         <Button
           mode="contained"
           buttonColor="black"
+          textColor="white"
           onPress={() => login(email, password, navigation)}
           style={{borderRadius: 10, marginTop: 15, paddingVertical: 8}}
           labelStyle={{fontSize: 18, fontWeight: "600"}}
@@ -64,6 +71,7 @@ export default function LoginScreen() {
           icon="arrow-right-circle"
           mode="contained"
           buttonColor="black"
+          textColor="white"
           onPress={() => navigation.navigate('Register')}
           style={{borderRadius: 10, marginTop: 5, paddingVertical: 8}}
           contentStyle={{flexDirection: 'row-reverse'}}
@@ -77,7 +85,6 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   input: {
     backgroundColor: color.white,
-    color: "black",
     marginTop: 5,
     borderRadius: 10,
     borderTopLeftRadius: 10,

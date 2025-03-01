@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { getMessaging, requestPermission, subscribeToTopic } from "@react-native-firebase/messaging";
 import { getApp } from "@react-native-firebase/app";
 import { PermissionsAndroid, Platform } from "react-native";
+import { PaperProvider, MD3DarkTheme } from "react-native-paper";
 
 export default function App() {
   useEffect(() => {
@@ -49,9 +50,11 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <AuthProvider>
-        <AppNavigator />
-      </AuthProvider>
+      <PaperProvider theme={MD3DarkTheme}>
+        <AuthProvider>
+          <AppNavigator />
+        </AuthProvider>
+      </PaperProvider>
     </SafeAreaProvider>
   );
 }
