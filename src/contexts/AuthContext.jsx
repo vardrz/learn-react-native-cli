@@ -5,7 +5,7 @@ import { Snackbar } from "react-native-paper";
 import { Text } from "react-native";
 import { getMessaging, onMessage, subscribeToTopic, unsubscribeFromTopic } from "@react-native-firebase/messaging";
 import { getApp } from "@react-native-firebase/app";
-import notifee from '@notifee/react-native';
+import notifee, { AndroidStyle } from '@notifee/react-native';
 
 const AuthContext = createContext();
 
@@ -117,6 +117,12 @@ export const AuthProvider = ({ children }) => {
         body: notification.body,
         android: {
           channelId: 'default',
+          smallIcon: 'ic_notification',
+          largeIcon: 'ic_notification',
+          style: {
+              type: AndroidStyle.BIGTEXT,
+              text: notification.body
+          }
         },
       });
     }
