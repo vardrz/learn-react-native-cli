@@ -7,17 +7,24 @@ import App from './src/App';
 import {name as appName} from './app.json';
 import { getMessaging, setBackgroundMessageHandler } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app';
+import notifee from '@notifee/react-native';
 
 const messaging = getMessaging(getApp());
 
 setBackgroundMessageHandler(messaging, async (remoteMessage) => {
-    console.log("Background Notification!", JSON.stringify(remoteMessage));
-});
+    if (remoteMessage.data) {
+        await notifee.displayNotification({
+            title: remoteMessage.data.title,
+            body: remoteMessage.data.body,
+            android: {
+                channelId: 'default',
+            },
+        });
+    }
 
-// onMessage(messaging, async (remoteMessage) => {
-//     console.log(remoteMessage.notification.body ?? "ada notif");
-//     Alert(remoteMessage.notification.body ?? "ada notif");
-// });
+    console.log("Background Notification!", remoteMessage.data);
+    return;
+});
 
 AppRegistry.registerComponent(appName, () => App);
 Appearance.setColorScheme("dark");

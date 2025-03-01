@@ -6,6 +6,7 @@ import { getMessaging, requestPermission, subscribeToTopic } from "@react-native
 import { getApp } from "@react-native-firebase/app";
 import { PermissionsAndroid, Platform } from "react-native";
 import { PaperProvider, MD3DarkTheme } from "react-native-paper";
+import notifee, { AndroidImportance } from "@notifee/react-native";
 
 export default function App() {
   useEffect(() => {
@@ -30,9 +31,24 @@ export default function App() {
       }
     };
 
+    const notifeeCreateChannel = async () => {
+      try {
+        await notifee.createChannel({
+          id: 'default',
+          name: 'Default Notification',
+          // lights: false,
+          vibration: true,
+          importance: AndroidImportance.HIGH,
+        });
+      } catch (error) {
+        console.error("Failed create notifee channel");
+      }
+    };
+
     requestAndroidNotificationPermission();
     requestUserPermission();
     subsGlobalTopic();
+    notifeeCreateChannel();
   }, []);
 
   const requestAndroidNotificationPermission = async () => {

@@ -5,6 +5,7 @@ import { Snackbar } from "react-native-paper";
 import { Text } from "react-native";
 import { getMessaging, onMessage, subscribeToTopic, unsubscribeFromTopic } from "@react-native-firebase/messaging";
 import { getApp } from "@react-native-firebase/app";
+import notifee from '@notifee/react-native';
 
 const AuthContext = createContext();
 
@@ -103,7 +104,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const messaging = getMessaging(getApp());
     const unsubscribe = onMessage(messaging, async (remoteMessage) => {
-      setNotification(remoteMessage.notification);
+      setNotification(remoteMessage.data);
     });
 
     return unsubscribe;
@@ -111,8 +112,13 @@ export const AuthProvider = ({ children }) => {
   
   useEffect(() => {
     if (notification) {
-      setShowSnackbar(true);
-      setSnackbarMsg(notification.title + ":\n" + notification.body);
+      notifee.displayNotification({
+        title: notification.title,
+        body: notification.body,
+        android: {
+          channelId: 'default',
+        },
+      });
     }
 
     setTimeout(() => {
@@ -126,7 +132,6 @@ export const AuthProvider = ({ children }) => {
       
       {/* snackbar */}
       <Snackbar
-        wrapperStyle={notification ? { top: 20 } : {}}
         style={{
           backgroundColor: "black",
           borderRadius: 15
